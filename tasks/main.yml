@@ -7,4 +7,8 @@
     - name: "Enable and start daemons."
       include_tasks: services.yml
       tags: [services]
+
+    - name: "Open Firewall ports."
+      include_tasks: firewall.yml
+      tags: [firewall]
   become: true 

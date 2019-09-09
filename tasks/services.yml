@@ -1,8 +1,13 @@
 ---
 
-- name: "Enable Service." 
+- name: "Enable Services." 
   systemd:
-    state: started
+    name: "{{ item }}"
     enabled: yes
-    name: "{{ rh_daemons }}"
+    state: started
+  with_items: "{{ rh_daemons }}"
 
+  #- name: "Start Services." 
+  #  systemd:
+  #    name: "{{ rh_daemons }}"
+  #    state: started
