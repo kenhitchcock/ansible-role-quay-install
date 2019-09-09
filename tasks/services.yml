@@ -1,0 +1,8 @@
+---
+
+- name: "Enable Service." 
+  systemd:
+    state: started
+    enabled: yes
+    name: "{{ rh_daemons }}"
+

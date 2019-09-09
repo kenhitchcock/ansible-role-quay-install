@@ -1,0 +1,14 @@
+---
+# default values for role
+#
+
+rh_basepkgs:
+  - docker
+
+rh_daemons:
+  - docker
+
+rh_ports:
+  - 8443/tcp
+  - 80/tcp
+  - 443/tcp

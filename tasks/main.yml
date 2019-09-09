@@ -1,0 +1,10 @@
+---
+- block:
+    - name: "Install packages required."
+      include_tasks: packages.yml
+      tags: [pkgs]
+
+    - name: "Enable and start daemons."
+      include_tasks: services.yml
+      tags: [services]
+  become: true 
