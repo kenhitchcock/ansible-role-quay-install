@@ -1,14 +1,18 @@
 ---
 - block:
-    - name: "Install packages required."
+    - name: "Packages required for Quay."
       include_tasks: packages.yml
       tags: [pkgs]
 
-    - name: "Enable and start daemons."
-      include_tasks: services.yml
-      tags: [services]
+    - name: "Pre requirements for Quay."
+      include_tasks: prereqs.yml
+      tags: [prereqs]
 
     - name: "Open Firewall ports."
       include_tasks: firewall.yml
       tags: [firewall]
+
+    - name: "Create Containers for Quay."
+      include_tasks: containers.yml
+      tags: [containers]
   become: true 

@@ -2,13 +2,35 @@
 # default values for role
 #
 
-rh_basepkgs:
-  - docker
+# Mysql variables
+MYSQL_CONTAINER_NAME: mysql
+MYSQL_DATABASE: enterpriseregistrydb
+MYSQL_PASSWORD: quaydbpass
+MYSQL_USER: quayuser
+MYSQL_ROOT_PASSWORD: rootpass
+MYSQL_CONTAINER_IMAGE: "registry.access.redhat.com/rhscl/mysql-57-rhel7"
+MYSQL_HOSTNAME: quay01
 
-rh_daemons:
-  - docker
+# Redis variables
+REDIS_CONTAINER_NAME: redis
+REDIS_CONTAINER_IMAGE: "registry.access.redhat.com/rhscl/redis-32-rhel7"
+REDIS_HOSTNAME: quay01
 
+# Quay variables
+QUAY_SUPERUSER: quaysuperuser
+QUAY_CONFIG: 'no'
+QUAY_PASSWORD: "superquaypass"
+
+
+# Ports required for Quay.
 rh_ports:
   - "8443/tcp"
   - "80/tcp"
   - "443/tcp"
+
+# Packages required for Quay
+rh_basepkgs:
+  - mariadb
+  - telnet
+
+
