@@ -20,7 +20,7 @@ REDIS_HOSTNAME: quay01
 QUAY_SUPERUSER: quaysuperuser
 QUAY_CONFIG: 'no'
 QUAY_PASSWORD: "superquaypass"
-
+QUAY_DEPLOYTYPE: "Docker"
 
 # Ports required for Quay.
 rh_ports:

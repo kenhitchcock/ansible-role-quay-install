@@ -3,16 +3,20 @@
     - name: "Packages required for Quay."
       include_tasks: packages.yml
       tags: [pkgs]
+      when: QUAY_DEPLOYTYPE == "Docker"
 
     - name: "Pre requirements for Quay."
       include_tasks: prereqs.yml
       tags: [prereqs]
+      when: QUAY_DEPLOYTYPE == "Docker"
 
     - name: "Open Firewall ports."
       include_tasks: firewall.yml
       tags: [firewall]
+      when: QUAY_DEPLOYTYPE == "Docker"
 
     - name: "Create Containers for Quay."
       include_tasks: containers.yml
       tags: [containers]
+      when: QUAY_DEPLOYTYPE == "Docker"
   become: true 
