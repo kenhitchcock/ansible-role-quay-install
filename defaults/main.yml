@@ -33,4 +33,28 @@ rh_basepkgs:
   - mariadb
   - telnet
 
+# Openshift Deployment
+# Quay Variables 
+QUAY_ENDPOINT_FQDN: quay-enterprise-clusterip
+QUAY_NAMESPACE: quay-enterprise
+QUAY_STORAGE_CLASS: quay-storageclass
 
+# Clair Variables
+CLAIR_IMAGE: quay.io/redhat/clair-jwt:v3.0.4
+CLAIR_DBNAME: clair
+CLAIR_DBUSER: clair 
+CLAIR_DBPASSWORD: test123 
+CLAIR_DBSSL: disable
+CLAIR_ENDPOINT_HOSTNAME: clair-service
+CLAIR_DB_PVC: postgres-clair-storage
+CLAIR_POSTGRES: postgres-clair
+CLAIR_POSTGRES_STORAGE_SIZE: 5Gi
+
+# Postgresql Varables 
+POSTGRES_PVC_NAME: postgres-storage
+POSTGRES_STORAGE_SIZE: 5Gi
+POSTGRES_IMAGE: registry.access.redhat.com/rhscl/postgresql-10-rhel7:1-35
+POSTGRES_SA: postgres
+POSTGRES_DBUSER: quayuser
+POSTGRES_DBPASSWORD: quaypass
+POSTGRES_DBNAME: quay

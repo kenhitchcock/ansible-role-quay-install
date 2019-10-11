@@ -1,0 +1,33 @@
+kind: Deployment
+metadata:
+ name: postgres
+ namespace: {{QUAY_NAMESPACE}}
+spec:
+ replicas: 1
+ template:
+  metadata:
+   labels:
+    app: postgres
+  spec:
+   containers:
+    - name: postgres
+      image: registry.access.redhat.com/rhscl/postgresql-10-rhel7:1-35
+      imagePullPolicy: "IfNotPresent"
+      ports:
+       - containerPort: 5432
+      env:
+        - name: POSTGRESQL_USER
+          value: {{POSTGRES_DBUSER}}
+        - name: POSTGRESQL_DATABASE
+          value: {{POSTGRES_DBNAME}}
+        - name: POSTGRESQL_PASSWORD
+          value: {{POSTGRES_DBPASSWORD}}
+      volumeMounts:
+        - mountPath: /var/lib/pgsql/data
+          name: postgredb
+      serviceAccount: {{POSTGRES_SA}}
+      serviceAccountName: {{POSTGRES_SA}}
+  volumes:
+    - name: postgredb
+      persistentVolumeClaim:
+      claimName: {{POSTGRES_PVC_NAME}}

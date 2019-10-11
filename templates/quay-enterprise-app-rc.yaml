@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: {{QUAY_NAMESPACE}}
+  name: quay-enterprise-app
+  labels:
+    quay-enterprise-component: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      quay-enterprise-component: app
+  template:
+    metadata:
+      namespace: quay-enterprise
+      labels:
+        quay-enterprise-component: app
+    spec:
+      volumes:
+      - name: configvolume
+        secret:
+          secretName: quay-enterprise-secret
+    containers:
+     - name: quay-enterprise-app
+       image: quay.io/redhat/quay:3.1.1
+       ports:
+        - containerPort: 8443
+          volumeMounts:
+        - name: configvolume
+          readOnly: false
+          mountPath: /conf/stack
+    imagePullSecrets:
+     - name: redhat-quay-pull-secret
