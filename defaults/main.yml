@@ -35,9 +35,12 @@ rh_basepkgs:
 
 # Openshift Deployment
 # Quay Variables 
+QUAY_APP_NAME: quay-enterprise-app
 QUAY_ENDPOINT_FQDN: quay-enterprise-clusterip
 QUAY_NAMESPACE: quay-enterprise
 QUAY_STORAGE_CLASS: quay-storageclass
+QUAY_IMAGE: quay.io/redhat/quay:3.1.1
+QUAY_SECRET_NAME: quay-enterprise-secret
 
 # Clair Variables
 CLAIR_IMAGE: quay.io/redhat/clair-jwt:v3.0.4
@@ -58,3 +61,4 @@ POSTGRES_SA: postgres
 POSTGRES_DBUSER: quayuser
 POSTGRES_DBPASSWORD: quaypass
 POSTGRES_DBNAME: quay
+POSTGRES_PORT: 5432

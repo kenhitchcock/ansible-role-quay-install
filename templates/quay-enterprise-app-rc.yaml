@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   namespace: {{QUAY_NAMESPACE}}
-  name: quay-enterprise-app
+  name: {{QUAY_APP_NAME}}
   labels:
     quay-enterprise-component: app
 spec:
@@ -12,17 +12,17 @@ spec:
       quay-enterprise-component: app
   template:
     metadata:
-      namespace: quay-enterprise
+      namespace: {{QUAY_NAMESPACE}}
       labels:
         quay-enterprise-component: app
     spec:
       volumes:
       - name: configvolume
         secret:
-          secretName: quay-enterprise-secret
+          secretName: {{QUAY_SECRET_NAME}}
     containers:
-     - name: quay-enterprise-app
-       image: quay.io/redhat/quay:3.1.1
+     - name: {{QUAY_APP_NAME}}
+       image: {{QUAY_IMAGE}}
        ports:
         - containerPort: 8443
           volumeMounts:

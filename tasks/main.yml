@@ -17,3 +17,10 @@
       tags: [containers]
   become: true 
   when: QUAY_DEPLOYTYPE == "Docker"
+
+- block:
+    - name: "Packages required for Quay."
+      include_tasks: packages.yml
+      tags: [pkgs]
+  become: true 
+  when: QUAY_DEPLOYTYPE == "Openshift"
