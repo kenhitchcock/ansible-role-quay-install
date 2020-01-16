@@ -14,7 +14,7 @@ spec:
     metadata:
       labels:
         quay-enterprise-component: clair-scanner
-      namespace: quay-enterprise
+      namespace: {{QUAY_NAMESPACE}}
     spec:
       containers:
         - image: {{CLAIR_IMAGE}}

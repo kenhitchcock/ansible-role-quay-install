@@ -16,11 +16,11 @@
       include_tasks: containers.yml
       tags: [containers]
   become: true 
-  when: QUAY_DEPLOYTYPE == "Docker"
+  when: QUAY_DEPLOYTYPE == "docker"
 
 - block:
     - name: "Packages required for Quay."
-      include_tasks: packages.yml
-      tags: [pkgs]
+      include_tasks: quay-openshift-deployment.yml
+      tags: [ocpdeploy]
   become: true 
-  when: QUAY_DEPLOYTYPE == "Openshift"
+  when: QUAY_DEPLOYTYPE == "openshift"

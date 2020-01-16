@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Route
 metadata:
-  name: quay-enterprise-config
+  name: {{QUAY_ROUTE_NAME}}
   namespace: {{QUAY_NAMESPACE}}
 spec:
   to:
     kind: Service
-    name: quay-enterprise-config
+    name: {{QUAY_SERVICE_NAME}}
   tls:
-    termination: passthrough
+    termination: {{QUAY_ROUTE_TERMINATION}}

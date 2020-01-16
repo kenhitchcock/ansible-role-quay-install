@@ -17,17 +17,17 @@ spec:
         quay-enterprise-component: app
     spec:
       volumes:
-      - name: configvolume
+      - name: {{QUAY_VOLUME_NAME}}
         secret:
           secretName: {{QUAY_SECRET_NAME}}
     containers:
      - name: {{QUAY_APP_NAME}}
        image: {{QUAY_IMAGE}}
        ports:
-        - containerPort: 8443
+        - containerPort: {{QUAY_APP_PORT}}
           volumeMounts:
-        - name: configvolume
+        - name: {{QUAY_VOLUME_NAME}}
           readOnly: false
           mountPath: /conf/stack
     imagePullSecrets:
-     - name: redhat-quay-pull-secret
+     - name: {{QUAY_IMAGE_PULL_SECRET}}

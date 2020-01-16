@@ -4,10 +4,10 @@ metadata:
   name: {{POSTGRES_PVC_NAME}}
   namespace: {{QUAY_NAMESPACE}}
 spec:
-  accessModes:
-    - ReadWriteOnce
-  volumeMode: Filesystem
-  resources:
+ accessModes:
+  - ReadWriteOnce
+ volumeMode: Filesystem
+ resources:
   requests:
-  storage: {{POSTGRES_STORAGE_SIZE}}
-  storageClassName: {{QUAY_STORAGE_CLASS}}
+   storage: {{POSTGRES_STORAGE_SIZE}}
+ storageClassName: {{QUAY_STORAGE_CLASS_NAME}}

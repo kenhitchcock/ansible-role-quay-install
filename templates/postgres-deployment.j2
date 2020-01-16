@@ -1,6 +1,7 @@
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
- name: postgres
+ name: {{POSTGRES_DC_NAME}}
  namespace: {{QUAY_NAMESPACE}}
 spec:
  replicas: 1
@@ -11,23 +12,23 @@ spec:
   spec:
    containers:
     - name: postgres
-      image: registry.access.redhat.com/rhscl/postgresql-10-rhel7:1-35
+      image: {{POSTGRES_IMAGE}}
       imagePullPolicy: "IfNotPresent"
       ports:
-       - containerPort: 5432
+       - containerPort: {{POSTGRES_PORT}}
       env:
-        - name: POSTGRESQL_USER
-          value: {{POSTGRES_DBUSER}}
-        - name: POSTGRESQL_DATABASE
-          value: {{POSTGRES_DBNAME}}
-        - name: POSTGRESQL_PASSWORD
-          value: {{POSTGRES_DBPASSWORD}}
+       - name: POSTGRESQL_USER
+         value: {{POSTGRES_DBUSER}}
+       - name: POSTGRESQL_DATABASE
+         value: {{POSTGRES_DBNAME}}
+       - name: POSTGRESQL_PASSWORD
+         value: {{POSTGRES_DBPASSWORD}}
       volumeMounts:
-        - mountPath: /var/lib/pgsql/data
-          name: postgredb
+       - mountPath: /var/lib/pgsql/data
+         name: postgredb
       serviceAccount: {{POSTGRES_SA}}
       serviceAccountName: {{POSTGRES_SA}}
-  volumes:
+   volumes:
     - name: postgredb
       persistentVolumeClaim:
       claimName: {{POSTGRES_PVC_NAME}}

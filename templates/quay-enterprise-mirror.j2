@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   namespace: {{QUAY_NAMESPACE}}
-  name: quay-enterprise-mirror
+  name: {{QUAY_MIRROR_APP_NAME}}
   labels:
     quay-enterprise-component: mirror-app
 spec:
@@ -12,16 +12,16 @@ spec:
       quay-enterprise-component: mirror-app
   template:
     metadata:
-    namespace: quay-enterprise
+    namespace: {{QUAY_NAMESPACE}}
     labels:
       quay-enterprise-component: mirror-app
   spec:
     containers:
-      - name: quay-enterprise-mirror-app
-        image: quay.io/redhat/quay:v3.1.1
+      - name: {{QUAY_MIRROR_APP_NAME}}
+        image: {{QUAY_IMAGE}}
         ports:
-          - containerPort: 8443
+          - containerPort: {{QUAY_MIRROR_APP_PORT}}
             command: ["/quay-registry/quay-entrypoint.sh"]
             args: ["repomirror"]
     imagePullSecrets:
-      - name: redhat-quay-pull-secret
+      - name: {{QUAY_IMAGE_PULL_SECRET}}
