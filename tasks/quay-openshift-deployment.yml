@@ -325,11 +325,107 @@
    - oc_quayconfigdeployment.module_results.stderr.find("NotFound") != -1
 
 
-# oc create -f quay-enterprise-config-service-clusterip.yaml
-# oc create -f quay-enterprise-config-route.yaml
-# oc create -f quay-enterprise-service-clusterip.yaml
-# oc create -f quay-enterprise-app-route.yaml
-# oc create -f quay-enterprise-app-rc.yaml
+# Check if Quay Config service exists, if not create it.
+- name: "OpenShift Check if Quay config service exists"
+  oc_obj:
+    state: list
+    kind: svc
+    name: "{{QUAY_CONFIG_SERVICE_NAME}}"
+    namespace: "{{QUAY_NAMESPACE}}"
+  register: oc_quayconfigsvc
+
+- name: "Process Quay config service templates"
+  shell:
+    cmd: "oc create -f quay-enterprise-config-service-clusterip.yaml"
+  args:
+    chdir: "{{QUAY_WORKING_PATH}}"
+  ignore_errors: true
+  when: 
+   - oc_quayconfigsvc.module_results is defined
+   - oc_quayconfigsvc.module_results.stderr is defined
+   - oc_quayconfigsvc.module_results.stderr.find("NotFound") != -1
+
+# Check if Quay Config route exists, if not create it.
+- name: "OpenShift Check if Quay config route exists"
+  oc_obj:
+    state: list
+    kind: route
+    name: "{{QUAY_CONFIG_ROUTE_NAME}}"
+    namespace: "{{QUAY_NAMESPACE}}"
+  register: oc_quayconfigroute
+
+- name: "Process Quay config route templates"
+  shell:
+    cmd: "oc create -f quay-enterprise-config-route.yaml"
+  args:
+    chdir: "{{QUAY_WORKING_PATH}}"
+  ignore_errors: true
+  when: 
+   - oc_quayconfigroute.module_results is defined
+   - oc_quayconfigroute.module_results.stderr is defined
+   - oc_quayconfigroute.module_results.stderr.find("NotFound") != -1
+  
+# Check if Quay service exists, if not create it.
+- name: "OpenShift Check if Quay service exists"
+  oc_obj:
+    state: list
+    kind: svc
+    name: "{{QUAY_SERVICE_NAME}}"
+    namespace: "{{QUAY_NAMESPACE}}"
+  register: oc_quaysvc
+
+- name: "Process Quay service templates"
+  shell:
+    cmd: "oc create -f quay-enterprise-service-clusterip.yaml"
+  args:
+    chdir: "{{QUAY_WORKING_PATH}}"
+  ignore_errors: true
+  when: 
+   - oc_quaysvc.module_results is defined
+   - oc_quaysvc.module_results.stderr is defined
+   - oc_quaysvc.module_results.stderr.find("NotFound") != -1
+
+   # Check if Quay Config route exists, if not create it.
+- name: "OpenShift Check if Quay route exists"
+  oc_obj:
+    state: list
+    kind: route
+    name: "{{QUAY_ROUTE_NAME}}"
+    namespace: "{{QUAY_NAMESPACE}}"
+  register: oc_quayroute
+
+- name: "Process Quay route templates"
+  shell:
+    cmd: "oc create -f quay-enterprise-app-route.yaml"
+  args:
+    chdir: "{{QUAY_WORKING_PATH}}"
+  ignore_errors: true
+  when: 
+   - oc_quayroute.module_results is defined
+   - oc_quayroute.module_results.stderr is defined
+   - oc_quayroute.module_results.stderr.find("NotFound") != -1
+
+# Check if quay enterprise deployment exists, if not create it.
+- name: "Check if quay enterprise deployment exists."
+  oc_obj:
+    state: list
+    kind: deployment
+    name: "{{QUAY_APP_NAME}}"
+    namespace: "{{QUAY_NAMESPACE}}"
+  register: oc_quaydeployment
+
+- name: "Create quay enterprise deployment."
+  shell:
+    cmd: "oc create -f quay-enterprise-app-rc.yaml"
+  args:
+    chdir: "{{QUAY_WORKING_PATH}}"
+  ignore_errors: true
+  when: 
+   - oc_quaydeployment.module_results is defined
+   - oc_quaydeployment.module_results.stderr is defined
+   - oc_quaydeployment.module_results.stderr.find("NotFound") != -1
+
+
 
 
 
