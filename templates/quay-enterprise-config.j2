@@ -12,6 +12,7 @@ spec:
    quay-enterprise-component: config-app
  template:
   metadata:
+   namespace: {{QUAY_NAMESPACE}}
    labels:
      quay-enterprise-component: config-app
   spec:
@@ -19,8 +20,9 @@ spec:
     - name: {{QUAY_CONFIG_APP_NAME}}
       image: {{QUAY_CONFIG_IMAGE}}
       ports:
-       - containerPort: 8443
-         command: ["/quay-registry/quay-entrypoint.sh"]
-         args: ["config", "secret"]
-      imagePullSecrets:
-       - name: {{QUAY_IMAGE_PULL_SECRET}}
+      - name: https
+        containerPort: 8443
+      command: ["/quay-registry/quay-entrypoint.sh"]
+      args: ["config", "secret"]
+   imagePullSecrets:
+     - name: {{QUAY_IMAGE_PULL_SECRET}}

@@ -45,9 +45,10 @@
     namespace: "{{QUAY_NAMESPACE}}"
   register: oc_quayconfigsecret
 
+  #oc create secret generic quay-enterprise-config-secret --from-file=config.yaml -n quay-enterprise
 - name: "Process config secret templates"
   shell: 
-    cmd: "oc create -f quay-enterprise-config-secret.yaml"
+    cmd: "oc create secret generic quay-enterprise-config-secret --from-file=config.yaml -n {{QUAY_NAMESPACE}}"
   args:
     chdir: "{{QUAY_WORKING_PATH}}"
   ignore_errors: true
@@ -55,6 +56,26 @@
    - oc_quayconfigsecret.module_results is defined
    - oc_quayconfigsecret.module_results.stderr is defined
    - oc_quayconfigsecret.module_results.stderr.find("NotFound") != -1
+
+# Check if generic secret exists, if not create it.
+- name: "OpenShift Check if generic secret exists"
+  oc_obj:
+    state: list
+    kind: secret
+    name: "quay-enterprise-secret"
+    namespace: "{{QUAY_NAMESPACE}}"
+  register: oc_quaygensecret
+
+- name: "Create generic secret"
+  shell: 
+    cmd: "oc create secret generic quay-enterprise-secret --from-file=config.yaml -n {{QUAY_NAMESPACE}}"
+  args:
+    chdir: "{{QUAY_WORKING_PATH}}"
+  ignore_errors: true
+  when: 
+   - oc_quaygensecret.module_results is defined
+   - oc_quaygensecret.module_results.stderr is defined
+   - oc_quaygensecret.module_results.stderr.find("NotFound") != -1
 
 # Check if pull secret exists, if not create it.
 - name: "OpenShift Check if Pull secret exists"
@@ -303,7 +324,7 @@
    - oc_redissvc.module_results is defined
    - oc_redissvc.module_results.stderr is defined
    - oc_redissvc.module_results.stderr.find("NotFound") != -1
-  
+
 # Check if quay enterprise config deployment exists, if not create it.
 - name: "Check if quay enterprise config deployment exists."
   oc_obj:

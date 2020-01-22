@@ -9,7 +9,7 @@ MYSQL_PASSWORD: quaydbpass
 MYSQL_USER: quayuser
 MYSQL_ROOT_PASSWORD: rootpass
 MYSQL_CONTAINER_IMAGE: "registry.access.redhat.com/rhscl/mysql-57-rhel7"
-MYSQL_HOSTNAME: quay01
+MYSQL_HOSTNAME: postgres
 
 # Redis variables
 REDIS_APP_NAME: quay-enterprise-redis
@@ -70,7 +70,7 @@ QUAY_PASSWORD: "superquaypass"
 QUAY_ENDPOINT_FQDN: quay-enterprise-clusterip
 QUAY_NAMESPACE: quay-enterprise
 QUAY_STORAGE_CLASS: quay-storageclass
-QUAY_IMAGE: quay.io/redhat/quay:3.1.1
+QUAY_IMAGE: quay.io/redhat/quay:v3.2.0
 QUAY_IMAGE_PULL_SECRET: redhat-quay-pull-secret
 QUAY_SECRET_NAME: quay-enterprise-secret
 QUAY_SERVICE_ACCOUNT: quay-enterprise-serviceaccount

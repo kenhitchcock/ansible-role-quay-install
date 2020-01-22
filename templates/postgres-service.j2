@@ -6,8 +6,8 @@ metadata:
   labels:
     app: postgres
 spec:
-  type: NodePort
   ports:
-  - port: {{POSTGRES_PORT}}
+  - name: postgres
+    port: {{POSTGRES_PORT}}
     selector:
       app: postgres
