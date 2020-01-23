@@ -52,7 +52,7 @@ Future Releases
 License
 -------
 
-MIT
+ MIT
 
 Author Information
 ------------------
