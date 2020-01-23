@@ -18,8 +18,8 @@ spec:
   spec:
    volumes:
     - name: {{QUAY_VOLUME_NAME}}
-   secret:
-   secretName: {{QUAY_SECRET_NAME}}
+      secret:
+       secretName: {{QUAY_SECRET_NAME}}
    containers:
     - name: {{QUAY_APP_NAME}}
       image: {{QUAY_IMAGE}}
