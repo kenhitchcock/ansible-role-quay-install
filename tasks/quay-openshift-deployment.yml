@@ -447,9 +447,43 @@
    - oc_quaydeployment.module_results.stderr.find("NotFound") != -1
 
 
+# Clair Deployment commands 
+- name: "Clair deployment if enabled."
+  block:
+    # Check if pvc exists, if not create it.
+    - name: "OpenShift Check if Clair pvc exists"
+      oc_obj:
+        state: list
+        kind: pvc
+        name: "{{CLAIR_DB_PVC}}"
+        namespace: "{{QUAY_NAMESPACE}}"
+      register: oc_clairpvc
 
+    - name: "Process Clair pvc template."
+      shell: 
+        cmd: "oc create -f postgres-clair-storage.yaml"
+      args:
+        chdir: "{{QUAY_WORKING_PATH}}"
+      ignore_errors: true
+      when: 
+       - oc_clairpvc.module_results is defined
+       - oc_clairpvc.module_results.stderr is defined
+       - oc_clairpvc.module_results.stderr.find("NotFound") != -1
 
+#oc create -f postgres-clair-deployment.yaml
+# oc create -f postgres-clair-service.yaml
 
+ #   - name: "Create Clair config secret."
+ #     shell:
+ #       cmd: "oc create secret generic clair-scanner-config-secret --from-file=clair-config.yaml --from-file=security_scanner.pem"
+ #     args:
+ #       chdir: "{{QUAY_WORKING_PATH}}"
+ #     ignore_errors: true
+
+# oc create -f clair-service.yaml
+# oc create -f clair-deployment.yaml
+
+  when: "CLAIR_DEPLOY == 'yes'"
 
 
 # Commands to deploy Quay (key) into OpenShift

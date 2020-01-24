@@ -112,6 +112,7 @@ QUAY_MIRROR_APP_NAME: quay-enterprise-mirror
 QUAY_MIRROR_APP_PORT: 8443
 
 # Clair Variables
+CLAIR_DEPLOY: 'yes'  # Options accepted are 'yes' and 'no'
 CLAIR_IMAGE: quay.io/redhat/clair-jwt:v3.0.4
 CLAIR_DBNAME: clair
 CLAIR_DBUSER: clair 
