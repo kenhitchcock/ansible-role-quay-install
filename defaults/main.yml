@@ -40,6 +40,7 @@ QUAY_DEPLOY_GROUP: root
 QUAY_DEPLOYMENT_TEMPLATES:
  - clair-config
  - clair-deployment
+ - clair-service
  - config
  - db-pvc
  - postgres-clair-deployment
@@ -112,8 +113,10 @@ QUAY_MIRROR_APP_NAME: quay-enterprise-mirror
 QUAY_MIRROR_APP_PORT: 8443
 
 # Clair Variables
-CLAIR_DEPLOY: 'yes'  # Options accepted are 'yes' and 'no'
+CLAIR_DEPLOY: 'no'  # Options accepted are 'yes' and 'no'
 CLAIR_IMAGE: quay.io/redhat/clair-jwt:v3.0.4
+CLAIR_APP_NAME: clair-scanner
+CLAIR_SVC_NAME: clair-service
 CLAIR_DBNAME: clair
 CLAIR_DBUSER: clair 
 CLAIR_DBPASSWORD: test123 
@@ -122,6 +125,15 @@ CLAIR_ENDPOINT_HOSTNAME: clair-service
 CLAIR_DB_PVC: postgres-clair-storage
 CLAIR_POSTGRES: postgres-clair
 CLAIR_POSTGRES_STORAGE_SIZE: 5Gi
+CLAIR_POSTGRES_PORT: 5432
+
+CLAIR_CERT_NAME: 'security_scanner'  ##Advise to not change this unless you absolutley have to.
+CLAIR_CERT_COUNTRYCODE: 'GB'
+CLAIR_CERT_STATE: 'London'
+CLAIR_CERT_LOCATION: 'London'
+CLAIR_CERT_ORG: 'Security Company'
+CLAIR_CERT_DEP: 'IT Department'
+CLAIR_CERT_DOMAIN: 'example.com'
 
 # Postgresql Varables 
 POSTGRES_DC_NAME: postgres
