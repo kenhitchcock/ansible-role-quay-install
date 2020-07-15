@@ -27,6 +27,7 @@ rh_ports:
 
 # Packages required for Quay
 rh_basepkgs:
+  - firewalld
   - mariadb
   - telnet
 

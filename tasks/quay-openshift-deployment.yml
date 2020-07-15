@@ -62,24 +62,24 @@
 # This is used for when we try to automate the configuration of Quay. 
 # At the moment the manual configuration is required.
 # ---------------------------------------------------------------------
-#- name: "OpenShift Check if generic secret exists"
-#  oc_obj:
-#    state: list
-#    kind: secret
-#    name: "quay-enterprise-secret"
-#    namespace: "{{QUAY_NAMESPACE}}"
-#  register: oc_quaygensecret
+- name: "OpenShift Check if generic secret exists"
+  oc_obj:
+    state: list
+    kind: secret
+    name: "quay-enterprise-secret"
+    namespace: "{{QUAY_NAMESPACE}}"
+  register: oc_quaygensecret
 
-#- name: "Create generic secret"
-#  shell: 
-#    cmd: "oc create secret generic quay-enterprise-secret --from-file=config.yaml -n {{QUAY_NAMESPACE}}"
-#  args:
-#    chdir: "{{QUAY_WORKING_PATH}}"
-#  ignore_errors: true
-#  when: 
-#   - oc_quaygensecret.module_results is defined
-#   - oc_quaygensecret.module_results.stderr is defined
-#   - oc_quaygensecret.module_results.stderr.find("NotFound") != -1
+- name: "Create generic secret"
+  shell: 
+    cmd: "oc create secret generic quay-enterprise-secret -n {{QUAY_NAMESPACE}}"
+  args:
+    chdir: "{{QUAY_WORKING_PATH}}"
+  ignore_errors: true
+  when: 
+   - oc_quaygensecret.module_results is defined
+   - oc_quaygensecret.module_results.stderr is defined
+   - oc_quaygensecret.module_results.stderr.find("NotFound") != -1
 
 # Check if pull secret exists, if not create it.
 - name: "OpenShift Check if Pull secret exists"
@@ -187,6 +187,10 @@
     cmd: "oc get pods -n {{QUAY_NAMESPACE}} | grep -v clair | grep postgres | awk '{print $1}'"
   register: oc_postgrespodname
   ignore_errors: true
+
+- name: "Need to wait for a minute so postgres pod can start."
+  pause:
+    minutes: 1
 
 - name: "Wait for Postgres pods to appear"
   oc_obj:
