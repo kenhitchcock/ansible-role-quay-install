@@ -4,6 +4,7 @@
   systemd:
     state: started
     name: firewalld
+    enabled: yes
 
 - name: "Open Firewall for Role." 
   firewalld:
