@@ -11,6 +11,8 @@
     - name: "Open Firewall ports."
       include_tasks: firewall.yml
       tags: [firewall]
+      when: 
+        - firewallrequired
 
     - name: "Create Containers for Quay."
       include_tasks: containers.yml

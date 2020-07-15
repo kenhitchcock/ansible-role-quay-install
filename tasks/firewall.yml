@@ -1,5 +1,10 @@
 ---
 
+- name: "Ensure firewalld service is running"
+  systemd:
+    state: started
+    name: firewalld
+
 - name: "Open Firewall for Role." 
   firewalld:
     port: "{{ item }}"
